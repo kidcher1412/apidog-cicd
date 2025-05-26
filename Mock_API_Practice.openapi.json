@@ -1,0 +1,6021 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Mock_API_Practice",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Home"
+    },
+    {
+      "name": "ExchangeInvoice"
+    },
+    {
+      "name": "Auto Job"
+    },
+    {
+      "name": "ReportExchange"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "AuthController_login",
+        "deprecated": false,
+        "description": "",
+        "operationId": "AuthController_login",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/userAccountDto"
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "description": "Dữ liệu trả về",
+                      "$ref": "#/components/schemas/AuthPayloadDto"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                },
+                "example": {
+                  "statusCode": 200,
+                  "isSuccess": true,
+                  "message": "Thành công",
+                  "messageErrors": [],
+                  "payload": {
+                    "username": "Thong_TLR",
+                    "accessToken": "eyJhbGciOiJIUzI1NiIsInR...",
+                    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR...",
+                    "role": "admin",
+                    "expired": "17061046756"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                },
+                "example": {
+                  "statusCode": 401,
+                  "isSuccess": false,
+                  "message": "Thất bại",
+                  "messageErrors": [
+                    "Tài khoản hoặc mật khẩu không chính xác"
+                  ],
+                  "payload": null
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "AuthController_refreshToken",
+        "deprecated": false,
+        "description": "",
+        "operationId": "AuthController_refreshToken",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "description": "Dữ liệu trả về",
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "description": "Tên đăng nhập của người dùng",
+                          "examples": [
+                            "john_doe"
+                          ]
+                        },
+                        "accessToken": {
+                          "type": "string",
+                          "description": "Access Token để xác thực",
+                          "examples": [
+                            "eyJhbGciOiJIUzI1NiIsInR..."
+                          ]
+                        },
+                        "refreshToken": {
+                          "type": "string",
+                          "description": "Refresh Token để làm mới Access Token",
+                          "examples": [
+                            "eyJhbGciOiJIUzI1NiIsInR..."
+                          ]
+                        },
+                        "role": {
+                          "type": "string",
+                          "description": "Vai trò của người dùng",
+                          "examples": [
+                            "admin"
+                          ]
+                        },
+                        "expired": {
+                          "type": "string",
+                          "description": "Thông tin về thời gian hết hạn",
+                          "examples": [
+                            "17061046756"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "username",
+                        "accessToken",
+                        "refreshToken",
+                        "role",
+                        "expired"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/home": {
+      "get": {
+        "summary": "HomeController_getClientIp",
+        "deprecated": false,
+        "description": "",
+        "operationId": "HomeController_getClientIp",
+        "tags": [
+          "Home"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "string",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                },
+                "example": {
+                  "statusCode": 200,
+                  "isSuccess": true,
+                  "message": "Thành công",
+                  "messageErrors": [],
+                  "payload": "consectetur labore non do aliqua"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/auto-cancel": {
+      "get": {
+        "summary": "Auto Cancel",
+        "deprecated": false,
+        "description": "API để thực hiện cancel hàng loạt hóa đơn ở trạng thái new trong ngày",
+        "operationId": "ExchangeInvoiceController_Auto_Cancel_New",
+        "tags": [
+          "ExchangeInvoice",
+          "Auto Job"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "nullable": true
+                    },
+                    "payload": {
+                      "type": "object",
+                      "properties": {},
+                      "description": "Dữ liệu trả về",
+                      "additionalProperties": true,
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/exchange-receipt": {
+      "get": {
+        "summary": "Query Receipt",
+        "deprecated": false,
+        "description": "API để lấy dữ liệu danh sách thông tin chung của hóa đơn",
+        "operationId": "ExchangeInvoiceController_Get_FXT_Receipt",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "receiptId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "minAmount",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "maxAmount",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "customerName",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NEW",
+                "PUBLICED",
+                "CANCELED",
+                "COMPLETED"
+              ],
+              "nullable": true
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 0,
+                      "maxItems": 0
+                    },
+                    "payload": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ReceiptItemReturnDto"
+                      },
+                      "description": "Dữ liệu trả về",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-200:200 Stattus Rebase": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 0,
+                      "maxItems": 0,
+                      "nullable": true
+                    },
+                    "payload": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ReceiptItemReturnDto"
+                      },
+                      "description": "Dữ liệu trả về",
+                      "minItems": 0,
+                      "maxItems": 0,
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Create Receipt",
+        "deprecated": false,
+        "description": "API để thêm dữ liệu invoice",
+        "operationId": "ExchangeInvoiceController_Create_FXT_Invoice",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExchangeInvoiceCreateDto"
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 0,
+                      "maxItems": 0,
+                      "nullable": true
+                    },
+                    "payload": {
+                      "type": "number",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "502": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Cancel Invoice",
+        "deprecated": false,
+        "description": "API để thêm hủy hóa đơn đã tạo",
+        "operationId": "ExchangeInvoiceController_Delete_FXT_Exchange_Rate",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceiptDetailQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseNumber"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "502": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/exchange-detail-invoice": {
+      "get": {
+        "summary": "Query Detail Receipt",
+        "deprecated": false,
+        "description": "API để lấy dữ liệu chi tiết receipt exchange",
+        "operationId": "ExchangeInvoiceController_Get_FXT_Detail_Receipt",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "receiptId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "description": "Dữ liệu trả về",
+                      "$ref": "#/components/schemas/ReceiptDetailReturnDbDto"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/exchange-rate-current": {
+      "get": {
+        "summary": "Get Exchange Rate",
+        "deprecated": false,
+        "description": "API để thêm dữ liệu invoice",
+        "operationId": "ExchangeInvoiceController_Get_FXT_Exchange_Rate_Current",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "dateQuery",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CurrencyRateListGroupTimeDto"
+                      },
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                },
+                "example": {
+                  "statusCode": 200,
+                  "isSuccess": true,
+                  "message": "Thành công",
+                  "messageErrors": [],
+                  "payload": [
+                    {
+                      "timeUpdate": "2024-12-02",
+                      "items": [
+                        {
+                          "id": 45417469.24802777,
+                          "currencyCode": "TOP",
+                          "currencyName": "Quetzal",
+                          "currencyUnit": "Ut Excepteur deserunt ad reprehenderit",
+                          "dateCreated": "2026-03-14",
+                          "ca1": 10499191.573762268,
+                          "ca2": 55816105.50797799,
+                          "ca3": null,
+                          "trs": 21795012.643270925
+                        },
+                        {
+                          "id": 13042222.868257493,
+                          "currencyCode": "MGA",
+                          "currencyName": "Cuban Peso",
+                          "currencyUnit": "exercitation do",
+                          "dateCreated": "2024-10-25",
+                          "ca1": -28942790.38528192,
+                          "ca2": null,
+                          "ca3": null,
+                          "trs": null
+                        },
+                        {
+                          "id": 16993489.747570172,
+                          "currencyCode": "SZL",
+                          "currencyName": "Iceland Krona",
+                          "currencyUnit": "elit anim veniam commodo",
+                          "dateCreated": "2024-06-05",
+                          "ca1": null,
+                          "ca2": -12062859.663111508,
+                          "ca3": null,
+                          "trs": 84077630.73661748
+                        }
+                      ]
+                    },
+                    {
+                      "timeUpdate": "2025-07-03",
+                      "items": [
+                        {
+                          "id": -35889230.5943856,
+                          "currencyCode": "IDR",
+                          "currencyName": "New Zealand Dollar",
+                          "currencyUnit": "labore in voluptate nisi",
+                          "dateCreated": "2025-06-17",
+                          "ca1": -84827419.45055449,
+                          "ca2": -90865486.52383897,
+                          "ca3": 12909093.104645833,
+                          "trs": null
+                        }
+                      ]
+                    },
+                    {
+                      "timeUpdate": "2024-09-02",
+                      "items": [
+                        {
+                          "id": -70312596.801883,
+                          "currencyCode": "MRU",
+                          "currencyName": "Saudi Riyal",
+                          "currencyUnit": "Excepteur",
+                          "dateCreated": "2024-10-16",
+                          "ca1": 91272641.11529246,
+                          "ca2": null,
+                          "ca3": null,
+                          "trs": -44972978.87869056
+                        },
+                        {
+                          "id": 3383077.1730178,
+                          "currencyCode": "PGK",
+                          "currencyName": "Seychelles Rupee",
+                          "currencyUnit": "dolor irure",
+                          "dateCreated": "2025-01-06",
+                          "ca1": -50963641.64323064,
+                          "ca2": -60507837.641701646,
+                          "ca3": null,
+                          "trs": null
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/list-currency": {
+      "get": {
+        "summary": "Get List Currency",
+        "deprecated": false,
+        "description": "API để thêm dữ liệu invoice",
+        "operationId": "ExchangeInvoiceController_Get_List_Currency",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CurrencyEntity"
+                      },
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/insert-exchange-rate-test": {
+      "post": {
+        "summary": "Set Exchange Rate",
+        "deprecated": false,
+        "description": "API để thêm dữ liệu Rate cho đồng tiền trong ngày",
+        "operationId": "ExchangeInvoiceController_Set_FXT_Exchange_Rate_Test",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseNumber"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "502": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/last-change-currency": {
+      "get": {
+        "summary": "Get the last date currency has change",
+        "deprecated": false,
+        "description": "API để tìm kiếm dữ liệu ngày cuối cùng cập nhật ngoại tệ",
+        "operationId": "ExchangeInvoiceController_Get_FXT_Last_Day_Change_Currency",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "string",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/public-exchange": {
+      "post": {
+        "summary": "Public exchange",
+        "deprecated": false,
+        "description": "API để phát hành hóa đơn thu",
+        "operationId": "ExchangeInvoiceController_Public_FXT_Exchange_Receipt",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceiptDetailQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseNumber"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "502": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/exchange-receipt-bill": {
+      "get": {
+        "summary": "Get Bill Invoice",
+        "deprecated": false,
+        "description": "API để thêm dữ liệu invoice",
+        "operationId": "ExchangeInvoiceController_Get_Exchange_Bill_Rate",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "receiptId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trả về file PDF biên nhận",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/cash-book-pdf-month": {
+      "get": {
+        "summary": "Get PDF cash book by Day",
+        "deprecated": false,
+        "description": "API để lấy pdf report day",
+        "operationId": "ExchangeInvoiceController_Get_Reprot_Cash_Book_PDF",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trả về file PDF biên nhận",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/report-pdf-month": {
+      "get": {
+        "summary": "Get PDF report by Day",
+        "deprecated": false,
+        "description": "API để lấy pdf report month",
+        "operationId": "ExchangeInvoiceController_Get_Reprot_Report_PDF",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trả về file PDF biên nhận",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/cash-book-pdf-id": {
+      "get": {
+        "summary": "Get PDF Cash Book by Id",
+        "deprecated": false,
+        "description": "API để lấy pdf Cash Book Id",
+        "operationId": "ExchangeInvoiceController_Get_Reprot_Cash_Book_Id_PDF",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trả về file PDF biên nhận",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/report-pdf-id": {
+      "get": {
+        "summary": "Get PDF report by Id",
+        "deprecated": false,
+        "description": "API để lấy pdf report Id",
+        "operationId": "ExchangeInvoiceController_Get_Reprot_Report_id_PDF",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trả về file PDF biên nhận",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/cash-book-slack-pdf-id": {
+      "get": {
+        "summary": "Get cash book at slack inventory",
+        "deprecated": false,
+        "description": "API để lấy pdf report day",
+        "operationId": "ExchangeInvoiceController_Get_Reprot_Cash_Book_Slask_Id_PDF",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trả về file PDF biên nhận",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/exchange-invoice/end-book-month-pdf": {
+      "get": {
+        "summary": "Get PDF end book month",
+        "deprecated": false,
+        "description": "API để lấy pdf end book month",
+        "operationId": "ExchangeInvoiceController_Get_Reprot_End_Book_Month_PDF",
+        "tags": [
+          "ExchangeInvoice"
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trả về file PDF biên nhận",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/report-exchange/open-balance": {
+      "get": {
+        "summary": "Query Open Balance",
+        "deprecated": false,
+        "description": "API để lấy dữ liệu tồn kho của tiền tệ tại thời điểm cụ thể",
+        "operationId": "ReportExchangeController_getOpeningBalance",
+        "tags": [
+          "ReportExchange"
+        ],
+        "parameters": [
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseNumber"
+                },
+                "example": {
+                  "statusCode": 200,
+                  "isSuccess": true,
+                  "message": "Thành công",
+                  "messageErrors": [],
+                  "payload": 5
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "502": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/report-exchange/reprot-by-day": {
+      "get": {
+        "summary": "Query make data receipts to cash book,report ",
+        "deprecated": false,
+        "description": "API để lấy dữ liệu hóa đơn để tổng hợp và cung cấp dưới dạng xử lý sổ quỹ và báo cáo",
+        "operationId": "ReportExchangeController_GetReportByDay",
+        "tags": [
+          "ReportExchange"
+        ],
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "currencyCode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "toId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "description": "Dữ liệu trả về",
+                      "$ref": "#/components/schemas/ReportByDayRes"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                },
+                "example": {
+                  "statusCode": 200,
+                  "isSuccess": true,
+                  "message": "Thành công",
+                  "messageErrors": [],
+                  "payload": {
+                    "uniqueCurrencies": [
+                      "USD"
+                    ],
+                    "rowsExpense": [
+                      {
+                        "currencyCode": "USD",
+                        "closingBalance": "1250",
+                        "tranxDate": "2025-03-24 12:00:00",
+                        "openingBalance": "15400"
+                      },
+                      {
+                        "currencyCode": "USD",
+                        "closingBalance": "1250",
+                        "tranxDate": "2025-03-24 12:00:00",
+                        "openingBalance": "15400"
+                      }
+                    ],
+                    "rowsCurrencyExchange": [
+                      {
+                        "date": "2025-03-27",
+                        "fromCurrency": "USD",
+                        "exchangeReceiptId": "EXR-20250327-001",
+                        "total": "1000",
+                        "totalExchange": 950,
+                        "openingBalance": 500,
+                        "closingBalance": 0,
+                        "createBy": "admin",
+                        "custommer": "Nguyễn Văn A"
+                      }
+                    ],
+                    "rowsCurrencyReport": [
+                      {
+                        "currencyCode": "USD",
+                        "items": [
+                          {
+                            "fromCurrency": "1",
+                            "toCurrency": "1",
+                            "valueUnit": -52377491.44444166,
+                            "quality": 5,
+                            "total": 16588316.423826918,
+                            "exchangeRate": 98222581.49293658,
+                            "createBy": "Username"
+                          }
+                        ],
+                        "total": 13033062.593468964,
+                        "totalExchange": -7547859.854566634
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:400 response object": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/report-exchange/create-expense": {
+      "post": {
+        "summary": "Create expense invoice",
+        "deprecated": false,
+        "description": "API để tạo dữ liệu chi ghi nhận hệ thống",
+        "operationId": "ReportExchangeController_createExpense",
+        "tags": [
+          "ReportExchange"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer {{accessToken}}",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {{accessToken}}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExpenseInvoiceCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseNumber"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Danh sách lỗi nếu có",
+                      "examples": [
+                        []
+                      ],
+                      "minItems": 1,
+                      "maxItems": 3
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "description": "Mã trạng thái HTTP",
+                      "examples": [
+                        200
+                      ]
+                    },
+                    "isSuccess": {
+                      "type": "boolean",
+                      "description": "Trạng thái thành công",
+                      "examples": [
+                        true
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Thông báo phản hồi",
+                      "examples": [
+                        "Thành công"
+                      ]
+                    },
+                    "messageErrors": {
+                      "description": "Danh sách lỗi nếu có",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "examples": [
+                        []
+                      ]
+                    },
+                    "payload": {
+                      "type": "null",
+                      "description": "Dữ liệu trả về"
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "isSuccess",
+                    "message",
+                    "messageErrors",
+                    "payload"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "502": {
+            "description": "API response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBad"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CurrencyRateListReturnDbDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Mã id ngoại tệ"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Mã ngoại tệ"
+          },
+          "currencyName": {
+            "type": "string",
+            "description": "Tên ngoại tệ"
+          },
+          "currencyUnit": {
+            "type": "string",
+            "description": "Đơn vị tính ngoại tệ"
+          },
+          "dateCreated": {
+            "type": "string",
+            "description": "Ngày tỷ giá ngoại tệ được tạo"
+          },
+          "ca1": {
+            "type": "number",
+            "description": "Tỷ giá CA1 của ngoại tệ (USD)",
+            "nullable": true
+          },
+          "ca2": {
+            "type": "number",
+            "description": "Tỷ giá CA2 của ngoại tệ (USD)",
+            "nullable": true
+          },
+          "ca3": {
+            "type": "number",
+            "description": "Tỷ giá CA3 của ngoại tệ (USD)",
+            "nullable": true
+          },
+          "trs": {
+            "type": "number",
+            "description": "Tỷ giá TRS của ngoại tệ (USD)",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "currencyCode",
+          "currencyName",
+          "currencyUnit",
+          "dateCreated",
+          "ca1",
+          "ca2",
+          "ca3",
+          "trs"
+        ]
+      },
+      "CurrencyRateListGroupTimeDto": {
+        "type": "object",
+        "properties": {
+          "timeUpdate": {
+            "type": "string",
+            "description": "Thời gian thực hiện cập nhật tỷ giá"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CurrencyRateListReturnDbDto"
+            },
+            "description": "Danh sách các ngoại tệ kèm tỷ giá"
+          }
+        },
+        "required": [
+          "timeUpdate",
+          "items"
+        ]
+      },
+      "CurrencyEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Mã id ngoại tệ"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Mã ngoại tệ"
+          },
+          "currencyName": {
+            "type": "string",
+            "description": "Tên ngoại tệ"
+          },
+          "currencyUnit": {
+            "type": "string",
+            "description": "Đơn vị tính ngoại tệ"
+          },
+          "currencyLocation": {
+            "type": "string",
+            "description": "khu vực ngoại tệ đặt",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "Trạng thái ngoại tệ"
+          }
+        },
+        "required": [
+          "id",
+          "currencyCode",
+          "currencyName",
+          "currencyUnit",
+          "currencyLocation",
+          "status"
+        ]
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "Mã trạng thái HTTP",
+            "examples": [
+              200
+            ]
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Trạng thái thành công",
+            "examples": [
+              true
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "Thông báo phản hồi",
+            "examples": [
+              "Thành công"
+            ]
+          },
+          "messageErrors": {
+            "description": "Danh sách lỗi nếu có",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              []
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "description": "Dữ liệu trả về",
+            "additionalProperties": true,
+            "properties": {}
+          }
+        },
+        "required": [
+          "statusCode",
+          "isSuccess",
+          "message",
+          "messageErrors",
+          "payload"
+        ]
+      },
+      "AuthPayloadDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Tên đăng nhập của người dùng",
+            "examples": [
+              "john_doe"
+            ]
+          },
+          "accessToken": {
+            "type": "string",
+            "description": "Access Token để xác thực",
+            "examples": [
+              "eyJhbGciOiJIUzI1NiIsInR..."
+            ]
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh Token để làm mới Access Token",
+            "examples": [
+              "eyJhbGciOiJIUzI1NiIsInR..."
+            ]
+          },
+          "role": {
+            "type": "string",
+            "description": "Vai trò của người dùng",
+            "examples": [
+              "admin"
+            ]
+          },
+          "expired": {
+            "type": "string",
+            "description": "Thông tin về thời gian hết hạn",
+            "examples": [
+              "17061046756"
+            ]
+          }
+        },
+        "required": [
+          "username",
+          "accessToken",
+          "refreshToken",
+          "role",
+          "expired"
+        ]
+      },
+      "ApiResponseNumber": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "Mã trạng thái HTTP",
+            "examples": [
+              200
+            ]
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Trạng thái thành công",
+            "examples": [
+              true
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "Thông báo phản hồi",
+            "examples": [
+              "Thành công"
+            ]
+          },
+          "messageErrors": {
+            "description": "Danh sách lỗi nếu có",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              []
+            ]
+          },
+          "payload": {
+            "type": "number",
+            "description": "dữ  liệu trả về từ lệnh (có thể null khi lỗi)",
+            "examples": [
+              5
+            ]
+          }
+        },
+        "required": [
+          "statusCode",
+          "isSuccess",
+          "message",
+          "messageErrors",
+          "payload"
+        ]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "userAccountDtoGetUsername": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponseBad": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "Mã trạng thái HTTP",
+            "examples": [
+              400
+            ]
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "Trạng thái thành công",
+            "examples": [
+              false
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "Thông báo phản hồi",
+            "examples": [
+              "Thất bại"
+            ]
+          },
+          "messageErrors": {
+            "description": "Danh sách lỗi nếu có",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              [
+                "fail to processing program",
+                "check log file"
+              ]
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "description": "dữ  liệu trả về từ lệnh (có thể null khi lỗi)",
+            "examples": [
+              null
+            ],
+            "properties": {}
+          }
+        },
+        "required": [
+          "statusCode",
+          "isSuccess",
+          "message",
+          "messageErrors",
+          "payload"
+        ]
+      },
+      "ReceiptDetailQueryDto": {
+        "type": "object",
+        "properties": {
+          "receiptId": {
+            "type": "string"
+          }
+        }
+      },
+      "ItemExchangeInvoiceCreateDto": {
+        "type": "object",
+        "properties": {
+          "fromCurrencyId": {
+            "type": "number"
+          },
+          "toCurrencyId": {
+            "type": "number"
+          },
+          "unitValue": {
+            "type": "number"
+          },
+          "exchangeRate": {
+            "type": "number"
+          },
+          "quality": {
+            "type": "number"
+          }
+        }
+      },
+      "ExchangeInvoiceCreateDto": {
+        "type": "object",
+        "properties": {
+          "customerName": {
+            "type": "string"
+          },
+          "passport": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "itemsDetail": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemExchangeInvoiceCreateDto"
+            }
+          }
+        }
+      },
+      "ExchangeRateReturnDbDto": {
+        "type": "object",
+        "properties": {
+          "currencyId": {
+            "type": "number",
+            "description": "Mã số ngoại tệ trên dữ liệu hệ thống",
+            "examples": [
+              2
+            ]
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Mã ngoại tệ trên hệ thống",
+            "examples": [
+              "USD"
+            ]
+          },
+          "currencyName": {
+            "type": "string",
+            "description": "Tên ngoại tệ trên hệ thống",
+            "examples": [
+              "Dollas"
+            ]
+          },
+          "currencyUnit": {
+            "type": "string",
+            "description": "Đơn vị tính ngoại tệ trên hệ thống",
+            "examples": [
+              "Dollas"
+            ]
+          },
+          "exchangeRate": {
+            "type": "number",
+            "description": "Tỷ giá ngoại tệ trao đổi trên hệ thống",
+            "examples": [
+              24500
+            ]
+          },
+          "sellRate": {
+            "type": "number",
+            "description": "Tỷ giá mua vào tiền mặt ngoại tệ trên hệ thống",
+            "examples": [
+              24500
+            ]
+          },
+          "buyRate": {
+            "type": "number",
+            "description": "Tỷ giá bán ra tiền mặt ngoại tệ trên hệ thống",
+            "examples": [
+              24500
+            ]
+          }
+        },
+        "required": [
+          "currencyId",
+          "currencyCode",
+          "currencyName",
+          "currencyUnit",
+          "exchangeRate",
+          "sellRate",
+          "buyRate"
+        ]
+      },
+      "ExchangeRateQueryDto": {
+        "type": "object",
+        "properties": {
+          "dateQuery": {
+            "type": "string"
+          }
+        }
+      },
+      "CurrencyRateItemCreateDbDto": {
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "ca1": {
+            "type": "number"
+          },
+          "ca2": {
+            "type": "number"
+          },
+          "ca3": {
+            "type": "number"
+          },
+          "trs": {
+            "type": "number"
+          }
+        }
+      },
+      "GetPdfDayDto": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "number"
+          },
+          "year": {
+            "type": "number"
+          },
+          "fromId": {
+            "type": "number"
+          },
+          "toId": {
+            "type": "number"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "fromDate": {
+            "type": "string"
+          },
+          "toDate": {
+            "type": "string"
+          }
+        }
+      },
+      "ReportByDayQueryDto": {
+        "type": "object",
+        "properties": {
+          "fromDate": {
+            "type": "string"
+          },
+          "toDate": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "fromId": {
+            "type": "number"
+          },
+          "toId": {
+            "type": "number"
+          }
+        }
+      },
+      "ReportByCurrencyQueryDto": {
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "fromExchangeId": {
+            "type": "number"
+          },
+          "toExchangeId": {
+            "type": "number"
+          }
+        }
+      },
+      "ExpenseInvoiceCreateDto": {
+        "type": "object",
+        "properties": {
+          "dateQuery": {
+            "type": "string"
+          },
+          "currencyId": {
+            "type": "number"
+          },
+          "closingBalance": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateExchangeReceiptDto": {
+        "type": "object",
+        "properties": {
+          "created_by": {
+            "type": "string"
+          },
+          "updated_by": {
+            "type": "string"
+          },
+          "customer_name": {
+            "type": "string"
+          },
+          "passport": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "ReceiptItemReturnDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Số hóa đơn",
+            "examples": [
+              "101"
+            ]
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Ngày tạo hóa đơn",
+            "examples": [
+              "2025-03-24T12:00:00Z"
+            ]
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "Tên tài khoản đã tạo hóa đơn",
+            "examples": [
+              "Username 1"
+            ]
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "Ngày cập nhật hóa đơn",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "Tên tài khoản đã cập nhật hóa đơn",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "description": "Tên người nộp tiền của hóa đơn",
+            "examples": [
+              "Khách Hàng A"
+            ]
+          },
+          "passport": {
+            "type": "string",
+            "description": "Số passport của người nộp tiền của hóa đơn",
+            "examples": [
+              "015884785"
+            ]
+          },
+          "address": {
+            "type": "string",
+            "description": "Địa chỉ của người nộp tiền của hóa đơn",
+            "examples": [
+              "Địa chỉ A"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "Trạng thái hóa đơn",
+            "examples": [
+              "NEW"
+            ]
+          },
+          "totalExchange": {
+            "type": "number",
+            "description": "Tổng tiền VND đã trao đổi trong hóa đơn",
+            "examples": [
+              "NEW"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "createdDate",
+          "createdBy",
+          "customerName",
+          "passport",
+          "address",
+          "status",
+          "totalExchange"
+        ]
+      },
+      "ReceiptDetailReturnDbDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Số hóa đơn",
+            "examples": [
+              "23"
+            ]
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "Ngày tạo hóa đơn",
+            "examples": [
+              "2025-03-24 12:00:00"
+            ]
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "Tài khoản tạo hóa đơn",
+            "examples": [
+              "Username"
+            ]
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "Ngày chỉnh sửa hóa đơn",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "Tài khoản cập nhật hóa đơn",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "description": "Tên người nộp tiền của hóa đơn",
+            "examples": [
+              "Khách Hàng A"
+            ]
+          },
+          "passport": {
+            "type": "string",
+            "description": "Số passport của người nộp tiền của hóa đơn",
+            "examples": [
+              "015884785"
+            ]
+          },
+          "address": {
+            "type": "string",
+            "description": "Địa chỉ của người nộp tiền của hóa đơn",
+            "examples": [
+              "Địa chỉ A"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "Trạng thái hóa đơn",
+            "examples": [
+              "NEW"
+            ]
+          },
+          "detail": {
+            "type": "array",
+            "description": "Danh sách chi tiết loại tiền tệ",
+            "items": {
+              "$ref": "#/components/schemas/TypeOfCurrencyCodeDto"
+            }
+          },
+          "totalExchange": {
+            "type": "number",
+            "description": "Tổng tiền VND sau khi tính toán tất cả chi tiết trong hóa đơn",
+            "examples": [
+              112000
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "createdDate",
+          "createdBy",
+          "customerName",
+          "passport",
+          "address",
+          "status",
+          "detail",
+          "totalExchange"
+        ]
+      },
+      "DetailReceiptReturnDbDto": {
+        "type": "object",
+        "properties": {
+          "fromCurrency": {
+            "type": "string",
+            "description": "Mã ngoại tệ khách mang tới trao đổi",
+            "examples": [
+              "1"
+            ]
+          },
+          "toCurrency": {
+            "type": "string",
+            "description": "Mã ngoại tệ khách muốn trao đổi",
+            "examples": [
+              "1"
+            ]
+          },
+          "valueUnit": {
+            "type": "number",
+            "description": "mệnh giá tiền"
+          },
+          "quality": {
+            "type": "number",
+            "description": "Số lượng tờ mệnh giá",
+            "examples": [
+              5
+            ]
+          },
+          "total": {
+            "type": "number",
+            "description": "Tổng tiền thu được sau khi tính"
+          },
+          "exchangeRate": {
+            "type": "number",
+            "description": "Tỉ giá nhận được khi trao đổi ngoại tệ"
+          },
+          "createBy": {
+            "type": "string",
+            "description": "Tên tài khoản đã tạo",
+            "examples": [
+              "Username"
+            ]
+          }
+        },
+        "required": [
+          "fromCurrency",
+          "toCurrency",
+          "valueUnit",
+          "quality",
+          "total",
+          "exchangeRate",
+          "createBy"
+        ]
+      },
+      "TypeOfCurrencyCodeDto": {
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string",
+            "description": "Mã ngoại tệ trao đổi",
+            "examples": [
+              "USD"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "description": "Danh sách chi tiết mệnh giá món trao đổi ngoại tệ",
+            "items": {
+              "$ref": "#/components/schemas/DetailReceiptReturnDbDto"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "số tiền ngoại tệ thu vào của món ngoại tệ sau khi tính"
+          },
+          "totalExchange": {
+            "type": "number",
+            "description": "tổng số tiền VND đổi được tại món ngoại tệ thu vào"
+          }
+        },
+        "required": [
+          "currencyCode",
+          "items",
+          "total",
+          "totalExchange"
+        ]
+      },
+      "CurrencyRateListCreateDto": {
+        "type": "object",
+        "properties": {
+          "timeUpdate": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CurrencyRateItemCreateDbDto"
+            }
+          }
+        }
+      },
+      "ReportByDayRes": {
+        "type": "object",
+        "properties": {
+          "uniqueCurrencies": {
+            "description": "Danh sách mã ngoại tệ trao đổi",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "examples": [
+              [
+                "USD"
+              ]
+            ]
+          },
+          "rowsExpense": {
+            "description": "Danh sách chi phí theo ngày",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportExpenseReturnDbDto"
+            }
+          },
+          "rowsCurrencyExchange": {
+            "description": "Danh sách dữ liệu trao đổi tiền tệ theo ngày",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyDataDto"
+            }
+          },
+          "rowsCurrencyReport": {
+            "description": "Danh sách báo cáo loại tiền tệ",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TypeOfCurrencyCodeDto"
+            }
+          }
+        },
+        "required": [
+          "uniqueCurrencies",
+          "rowsExpense",
+          "rowsCurrencyExchange",
+          "rowsCurrencyReport"
+        ]
+      },
+      "userAccountDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Tên tài khoản đăng nhập"
+          },
+          "password": {
+            "type": "string",
+            "description": "Mật khẩu đăng nhập"
+          },
+          "ip": {
+            "type": "string",
+            "description": "ip máy đăng nhập"
+          }
+        }
+      },
+      "ReceiptQueryDto": {
+        "type": "object",
+        "properties": {
+          "receiptId": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "fromDate": {
+            "type": "string"
+          },
+          "toDate": {
+            "type": "string"
+          },
+          "minAmount": {
+            "type": "number"
+          },
+          "maxAmount": {
+            "type": "number"
+          },
+          "fromId": {
+            "type": "number"
+          },
+          "toId": {
+            "type": "number"
+          },
+          "customerName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NEW",
+              "PUBLICED",
+              "CANCELED",
+              "COMPLETED"
+            ]
+          }
+        }
+      },
+      "ReportExpenseReturnDbDto": {
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string",
+            "description": "Mã ngoại tệ thực hiện nhiệm chi",
+            "examples": [
+              "USD"
+            ]
+          },
+          "closingBalance": {
+            "type": "number",
+            "description": "Số tiền đã thực hiện chi"
+          },
+          "tranxDate": {
+            "type": "string",
+            "description": "ngày thực hiện nhiệm chi",
+            "examples": [
+              "2025-03-24 12:00:00"
+            ]
+          },
+          "openingBalance": {
+            "type": "number",
+            "description": "số dư tồn kho sau khi nhiệm chi"
+          }
+        },
+        "required": [
+          "currencyCode",
+          "closingBalance",
+          "tranxDate",
+          "openingBalance"
+        ]
+      },
+      "DailyDataDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Ngày giao dịch (YYYY-MM-DD)",
+            "examples": [
+              "2025-03-27"
+            ]
+          },
+          "fromCurrency": {
+            "type": "string",
+            "description": "Mã ngoại tệ nguồn",
+            "examples": [
+              "USD"
+            ]
+          },
+          "exchangeReceiptId": {
+            "type": "number",
+            "description": "Mã giao dịch nhận tiền tệ"
+          },
+          "total": {
+            "description": "Tổng số tiền giao dịch hoặc chuỗi số dạng string",
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "examples": [
+              1000
+            ]
+          },
+          "totalExchange": {
+            "description": "Tổng số tiền quy đổi hoặc chuỗi số dạng string",
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "examples": [
+              950
+            ]
+          },
+          "openingBalance": {
+            "type": "number",
+            "description": "Số dư đầu kỳ",
+            "examples": [
+              500
+            ]
+          },
+          "closingBalance": {
+            "type": "number",
+            "description": "Số dư cuối kỳ (mặc định 0)",
+            "examples": [
+              0
+            ]
+          },
+          "createBy": {
+            "type": "string",
+            "description": "Người tạo giao dịch",
+            "examples": [
+              "admin"
+            ]
+          },
+          "custommer": {
+            "type": "string",
+            "description": "Tên khách hàng",
+            "examples": [
+              "Nguyễn Văn A"
+            ]
+          }
+        },
+        "required": [
+          "date",
+          "fromCurrency",
+          "exchangeReceiptId",
+          "total",
+          "totalExchange",
+          "openingBalance",
+          "closingBalance",
+          "createBy",
+          "custommer"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "JWT Bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5201",
+      "description": "Develop Env"
+    }
+  ],
+  "security": []
+}
